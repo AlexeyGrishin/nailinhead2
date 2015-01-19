@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="nailinhead2">
+<head>
+    <!-- @if production !>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-route.min.js"></script>
+    <!-- @endif -->
+    <!-- @exclude-->
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-route.js"></script>
+    <!-- @endexclude-->
+    <script src="js/index.js"></script>
+    <script src="js/angular-parse.js"></script>
+    <link href="css/main.css" rel="stylesheet">
+    <title>Nailinhead</title>
+</head>
+<body ng-controller="MainCtrl">
+    <div class="loading" ng-if="login.loading">
+        <div class="msg">Подождите...</div>
+    </div>
+    <header ng-if="login.loggedIn">
+        <div>
+        <span class="logo">
+            <img src="img/logo.svg"/>
+            <sup><!-- @echo version --><!-- @exclude-->DEV<!-- @endexclude--></sup>
+        </span>
+        <a href="javascript:void(0)" class="logout" ng-click="logout()">Выйти</a>
+        <nav>
+            <a href="#/tasks" nih-navigation>Покупки</a>
+            <a href="#/budgets" nih-navigation>Бюджеты</a>
+            <a href="#/reports" nih-navigation>Отчеты</a>
+        </nav>
+        </div>
+
+    </header>
+    <main ng-view></main>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<aside class="modifications">
+    <div nih-navigation="#/reports">
+        <h3>Текущий месяц</h3>
+        <!--span nih-cost="newModification.total"></span>
+        <div nih-bonds="newModification.total"></div-->
+    </div>
+
+</aside>
+<section class="reports">
+    <table>
+        <tr class="header">
+            <th></th>
+            <th ng-repeat="month in report.months">{{month}}</th>
+        </tr>
+        <tr class="modification">
+            <th>Прибавки</th>
+            <td ng-repeat="mods in report.modifications">
+                <div class="report-task total mod" ng-if="mods.length > 1">
+                    <span nih-cost="pm.cost"></span>
+                    <span class="title">Всего</span>
+                </div>
+                <div class="report-task  mod" ng-repeat="task in mods" ng-class="{total: mods.length == 1}">
+                    <span nih-cost="task.cost"></span>
+                    <span class="title">{{task.title}}</span>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="project in report.projects">
+            <th>{{project.project}}</th>
+            <td ng-repeat="pm in project.permonth">
+                <div class="report-task total" ng-if="pm.length > 1">
+                    <span nih-cost="pm.cost"></span>
+                    <span class="title">Всего</span>
+                </div>
+                <div class="report-task" ng-repeat="task in pm" ng-class="{total: pm.length == 1}">
+                    <span nih-cost="task.cost"></span>
+                    <span class="title">{{task.title}}</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+</section>

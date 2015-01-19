@@ -1,0 +1,13 @@
+<form>
+<table class="login">
+    <tr>
+        <th>Имя</th><td><input ng-model="login.username"/></td>
+    </tr>
+    <tr>
+        <th>Пароль</th><td><input type="password" ng-model="login.password"/></td>
+    </tr>
+    <tr>
+        <th><button ng-click="doLogin()">Войти</button></th><td class="error">{{login.error}}</td>
+    </tr>
+</table>
+</form>

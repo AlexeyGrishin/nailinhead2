@@ -1,0 +1,78 @@
+<aside class="budgets">
+    <!-- TODO: do not allow move tasks to budget if there is no enough money on them -->
+    <div ng-repeat="budget in budgets | notRemoved"
+         nih-navigation="#/tasks/{{budget.objectId}}"
+         nih-drop-task="moveTask(budget, task)"
+         drop-title="Переместить трату сюда"
+
+            >
+        <h3><a href="#/tasks/{{budget.objectId}}" >{{budget.name}}</a></h3>
+        <span nih-cost="budget.remaining"></span>
+        <div nih-bonds="budget.remaining"></div>
+    </div>
+</aside>
+<section class="tasks">
+
+    <div class="date-selector">
+        <a ng-repeat="month in months" href="javascript:void(0)"
+           ng-click="selectDate(month.month)"
+           ng-class="{selected: month.month == currentMonth}"
+           nih-drop-task="changeDate(task, month.month)"
+           nih-drop-unless="!task.completed"
+           drop-title="сменить месяц"
+                >{{month.title}}</a>
+    </div>
+
+    <div ng-repeat="project in projects"
+         class="project"
+         nih-drop-task="moveTaskToProject(project, task)"
+         nih-drop-unless="task.projects[0] == project.name"
+         drop-title="Поменять проект"
+            >
+        <div class="group">
+            <div class="line">&nbsp;</div>
+            <h4>{{project.name}}</h4>
+            <button class="icon" ng-click="addTask(project)">
+                <img src="img/plus.svg"/>
+            </button>
+        </div>
+        <em ng-if="project.isEmpty()">
+            Нет ни одной покупки.
+            <a href="javascript:;" ng-click="deleteProject(project)" ng-if="project.canDelete()" class="danger">Удалить?</a>
+        </em>
+        <div ng-repeat="task in project.tasks" class="task-container" ng-class="{completed: task.completed}">
+            <div class="task" ng-class="{completed: task.completed}">
+                <span class="icon-before-task handler" nih-drag-task="task" title="Перетащите в другой бюджет или проект"></span>
+                <h4 ng-click="editTask(task)" title="Нажмите чтобы отредактировать">{{task.title}}</h4>
+                <button ng-click="toggle(task)" ng-if="!task.completed && enoughToBuy(task)">Купить</button>
+                <button disabled ng-if="!task.completed && !enoughToBuy(task)">Нет денег</button>
+                <button ng-click="toggle(task)" ng-if="task.completed">Отменить</button>
+                <span ng-click="editTask(task, 'cost1')" nih-cost="task.cost" class="cost"></span>
+            </div>
+
+            <nih-task-editor
+                    class="task-editor-container"
+                    ng-if="isEditedTask(task)"
+                    task="editedTask"
+                    on-save="saveTask(task)"
+                    on-cancel="cancelTaskEdit(task)"
+                    on-remove="removeTask(task)"
+                    focus-field="{{editFocusField}}"
+                    ></nih-task-editor>
+        </div>
+        <nih-task-editor
+                ng-if="isNewTaskForProject(editedTask, project)"
+                task="editedTask"
+                on-save="saveTask(task, project)"
+                on-cancel="cancelTaskEdit(task)"
+                on-remove="removeTask(task)"
+                ></nih-task-editor>
+
+    </div>
+    <div class="project placeholder">
+        <div class="group">
+            <div class="line">&nbsp;</div>
+            <h4><a href="javascript:;" ng-click="addProject(prompt('Имя проекта'))">Добавить проект</a></h4>
+        </div>
+    </div>
+</section>

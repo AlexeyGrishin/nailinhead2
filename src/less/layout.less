@@ -1,0 +1,71 @@
+@asideWidth: 16em;
+@asideBudgetRemWidth: 6em;
+@asidePad: 2em;
+main {
+  .limited-width;
+  margin-top: 3em;
+
+  & > aside {
+    float: left;
+    width: @asideWidth;
+    margin-left: @asidePad;
+    margin-right: @asidePad;
+
+    & > div {
+      h3 {
+        height: 1em;
+        padding-left: 1em;
+        line-height: 1em;
+        font-size: @fontBig;
+        width: (@asideWidth - @asideBudgetRemWidth) / @fontBig * @fontNormal;
+        display: inline-block;
+        font-weight: normal;
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+
+      span {
+        display: inline-block;
+        width: @asideBudgetRemWidth - 2px;
+        text-align: right;
+        .cost();
+      }
+
+      div.bonds {
+        text-align: right;
+        padding-right: 0.5em;
+        &> span {
+          width: 6px;
+          height: 10px;
+          display: inline-block;
+          margin-left: 3px;
+          &.bond5, &.bond50 {
+            background: #ffc000;
+          }
+          &.bond50 {
+            content: "50";
+            width: 20px;
+          }
+          &.bond1 {
+            background: #00ffc0;
+          }
+        }
+      }
+
+      border: 1px solid #ccc;
+
+      &.selected {
+        background: #EAEFF5;
+      }
+
+    }
+
+  }
+
+  & > section {
+    padding-left: @asidePad*2 + @asideWidth;
+    margin-right: @asidePad;
+  }
+}

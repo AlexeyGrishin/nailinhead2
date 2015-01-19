@@ -1,0 +1,42 @@
+<aside class="modifications">
+    <div nih-navigation="#/budgets/new">
+        <h3><a href="#/budgets/new">Новое пополнение</a></h3>
+        <span nih-cost="newModification.total"></span>
+        <div nih-bonds="newModification.total"></div>
+    </div>
+    <hr/>
+    <div ng-repeat="mod in modifications.slice().reverse()" nih-navigation="#/budgets/{{mod.objectId}}">
+        <h3><a href="#/budgets/{{mod.objectId}}">{{mod.reason}}</a></h3>
+        <span nih-cost="mod.total"></span>
+        <div nih-bonds="mod.total"></div>
+    </div>
+</aside>
+<section class="budgets" read-only="readonly">
+
+    <div class="reason">
+        <input ng-model="currentModification.reason">
+        <button ng-click="makeModification()">Пополнить</button>
+    </div>
+    <div ng-repeat="budget in currentModification.budgets" class="budget-container"
+         ng-if="!budget.deleted" ng-class="{todelete: budget.remaining == 0}">
+        <div class="budget">
+            <h3>{{budget.name}}</h3>
+            <span nih-cost="budget.remaining"></span>
+        </div>
+        <div class="addition">
+            <span>+</span><input ng-readonly="readonly" ng-model="budget.amount" name="amountof{{budget.objectId}}"><span>=</span>
+            <strong nih-cost="budget.remaining + 1*budget.amount"></strong>
+        </div>
+        <div class="prev-month" ng-if="budget.prevamount">
+            <span nih-cost="budget.prevamount"></span>
+        </div>
+        <div class="delete" ng-if="budget.remaining == 0 && !readonly">
+            <button class="icon" ng-click="removeBudget(budget)"><img src="img/minus.svg"></button>
+        </div>
+    </div>
+    <div ng-if="!readonly">
+        <div class="budget budget-placeholder">
+            <h3><a href="javascript:;" ng-click="addBudget()">Новый бюджет</a></h3>
+        </div>
+    </div>
+</section>

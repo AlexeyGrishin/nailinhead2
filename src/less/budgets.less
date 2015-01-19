@@ -1,0 +1,71 @@
+main {
+
+  & > section.budgets {
+
+    @budgetHeight: 2em;
+    @budgetWidth: 20em;
+    @addWidth: 20em;
+    & > div.reason {
+      font-size: @fontBig;
+      input {
+        height: 2em;
+        line-height: 2em;
+        border: 1px solid #ccc;
+        width: @budgetWidth + @addWidth + 3em;
+      }
+      button {
+        line-height: 2em;
+        width: 8em;
+        margin-left: 1em;
+        .left-round-text-button(2em);
+      }
+      margin-bottom: 2em;
+    }
+    & > div.budget-container {
+      & > div {
+        display: inline-block;
+        height: @budgetHeight;
+        padding-top: 1em;
+        padding-bottom: 1em;
+      }
+      div.budget {
+        width: @budgetWidth - @asideBudgetRemWidth;
+        position: relative;
+        padding-right: @asideBudgetRemWidth;
+        h3 {
+          margin-top: 0;
+        }
+        &> span {
+          position: absolute;
+          right: 0;
+          top: 1em;
+          width: @asideBudgetRemWidth;
+        }
+      }
+      div.addition {
+        width: @addWidth;
+        background: #dbedff;
+        padding-left: 1em;
+        input {
+          border: none;
+          height: 1.5em;
+        }
+        &>span {
+          display: inline-block;
+          width: 1.5em;
+          height: 1.5em;
+          font-weight: bold;
+          text-align: center;
+          background: #e3e1df;
+        }
+      }
+
+    }
+
+
+    .budget-placeholder {
+      h3, h3>a {color: #ccc; text-decoration: none}
+    }
+
+  }
+}

@@ -1,0 +1,185 @@
+main {
+  .limited-width;
+  margin-top: 3em;
+
+  & > aside.budgets {
+    & > div {
+      .droppable();
+    }
+  }
+
+  & > section.tasks {
+    .project {
+      .droppable();
+      border: 1px solid transparent;
+      @projectHeight: 2em;
+      @projectColor: #3b678f;
+      & > .group {
+        position: relative;
+        height: @projectHeight;
+        .line {
+          position: absolute;
+          width: 100%;
+          height: 1px;
+          top: @projectHeight/2;
+          border-bottom: 2px solid @projectColor;
+          content: "";
+        }
+
+        h4 {
+          display: inline-block;
+          color: @projectColor;
+          background: white;
+          width: auto;
+          position: relative;
+          margin: 0;
+          padding-right: 1em;
+          font-variant: small-caps;
+          line-height: 2em;
+          font-size: @fontBig;
+        }
+        button {
+          right: 0;
+          top: 0;
+          background: white;
+          position: absolute;
+          margin-right: 10px;
+          color: @projectColor;
+        }
+      }
+      &>em {
+        margin-left: 2em;
+        margin-top: 1em;
+        display: inline-block;
+      }
+    }
+
+    .project.placeholder {
+      .group .line {
+        border-color: #ccc;
+      }
+      h4, h4 > a {
+        color: #ccc;
+      }
+    }
+
+    .task {
+      margin-left: 2em;
+      & > * {
+        display: inline-block;
+        height: @taskHeight;
+        line-height: @taskHeight;
+      }
+      position: relative;
+      span.icon-before-task {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: @taskHandlerWidth;
+        height: @taskHeight;
+        margin-right: @taskPad;
+
+        &.handler {
+          @handlerSize: 1.5em;
+          width: @handlerSize;
+          height: @handlerSize;
+          top: (@taskHeight - @handlerSize) / 2;
+          left: (@taskHandlerWidth - @handlerSize) / 2;
+          background: #ebeb7a;
+          .animated();
+          border-radius: 2em;
+          &:hover {
+            border-radius: 0;
+            .rotation(45deg);
+          }
+          cursor: move;
+        }
+        > img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      h4 {
+        cursor: text;
+        padding-left: @taskHandlerWidth + @taskPad;
+        padding-right: @taskCostWidth + @taskButtonsWidth;
+        margin: 0;
+        font-weight: normal;
+        font-size: @fontNormal;
+      }
+      span.cost {
+        position: absolute;
+        right: @taskButtonsWidth;
+        width: @taskCostWidth;
+        .cost();
+        top: 0;
+
+      }
+      button {
+        .left-round-text-button(@taskHeight);
+        position: absolute;
+        right: 0;
+        width: @taskButtonsWidth;
+        top: 0;
+
+      }
+      &.completed {
+        &>h4, &>span {text-decoration: line-through; }
+        color: #444;
+        button, span.icon-before-task.handler {
+          background: #ccc;
+        }
+      }
+    }
+
+    .task-container {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      position: relative;
+
+      .task-editor-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        display: block;
+        background: #fff;
+        opacity: 0.95;
+        .task-editor {
+          margin-top: 0;
+
+        }
+      }
+    }
+  }
+
+  .date-selector {
+    text-align: right;
+    margin-bottom: 1em;
+    position: relative;
+    top: -1em;
+    &> a {
+      font-size: @fontNormal;
+      height: 1.5em;
+      line-height: 1.5em;
+      font-variant: small-caps;
+      text-transform: uppercase;
+      color: #88b;
+      display: inline-block;
+      width: 9em;
+      margin: 0 0.5em;
+      text-align: center;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+      .droppable();
+      .navigation-hover();
+
+      &.selected {
+        font-weight: bold;
+        color: #616161;
+        border-bottom: 2px solid #616161;
+      }
+    }
+  }
+}
