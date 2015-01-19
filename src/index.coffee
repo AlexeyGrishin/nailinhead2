@@ -66,6 +66,7 @@ angular.module('nailinhead2').controller 'MainCtrl', ['$scope', 'TasksService', 
 
 ]
 angular.module('nailinhead2').controller 'LoginCtrl', ['$scope', 'TasksService', 'ParseStorage', (scope, TasksService, ParseStorage) ->
+  scope.login.loading = false
   scope.doLogin = ->
     ParseStorage.login(scope.login.username, scope.login.password).then(
       (->
