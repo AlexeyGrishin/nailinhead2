@@ -16,7 +16,7 @@ module.exports = (grunt)->
       run: {options: singleRun: true}
       runBackground: {options: background: true}
     uglify:
-      release: fromInto ["public/js/granula.js", "public/js/index.js"], "release/js/index.js"
+      release: fromInto ["public/js/angular-parse.js", "public/js/index.js"], "release/js/index.js"
     cssmin:
       release: fromInto ["public/css/main.css"], "release/css/main.css"
     clean:
