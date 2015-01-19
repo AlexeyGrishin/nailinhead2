@@ -8,14 +8,14 @@
     <title>Nailinhead</title>
 </head>
 <body ng-controller="MainCtrl">
-<div class="loading" ng-if="login.loading">
-    <div class="msg">Подождите...</div>
-</div>
-<header ng-if="login.loggedIn">
-    <div>
+    <div class="loading" ng-if="login.loading">
+        <div class="msg">Подождите...</div>
+    </div>
+    <header ng-if="login.loggedIn">
+        <div>
         <span class="logo">
             <img src="img/logo.svg"/>
-            <sup>0.9.7</sup>
+            <sup>1.0</sup>
         </span>
         <a href="javascript:void(0)" class="logout" ng-click="logout()">Выйти</a>
         <nav>
@@ -23,9 +23,9 @@
             <a href="#/budgets" nih-navigation>Бюджеты</a>
             <a href="#/reports" nih-navigation>Отчеты</a>
         </nav>
-    </div>
+        </div>
 
-</header>
-<main ng-view></main>
+    </header>
+    <main ng-view></main>
 </body>
 </html>

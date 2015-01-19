@@ -1,12 +1,12 @@
 <aside class="budgets">
     <!-- TODO: do not allow move tasks to budget if there is no enough money on them -->
     <div ng-repeat="budget in budgets | notRemoved"
-         nih-navigation="#/tasks/{{budget.objectId}}"
+         nih-navigation="#/tasks/{{budget.objectId}}{{dateHref}}"
          nih-drop-task="moveTask(budget, task)"
          drop-title="Переместить трату сюда"
 
             >
-        <h3><a href="#/tasks/{{budget.objectId}}" >{{budget.name}}</a></h3>
+        <h3><a ng-href="#/tasks/{{budget.objectId}}{{dateHref}}" >{{budget.name}}</a></h3>
         <span nih-cost="budget.remaining"></span>
         <div nih-bonds="budget.remaining"></div>
     </div>
