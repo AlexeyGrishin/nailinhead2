@@ -1,8 +1,0 @@
-release
-src/**/*.js
-src/index.js
-node_modules
-public/js/index.js
-public/css/main.css
-*.log
-.idea
