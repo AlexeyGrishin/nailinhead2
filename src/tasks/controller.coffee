@@ -88,6 +88,7 @@ module.exports = (app) ->
         if $routeParams.budget
           scope.loading.tasks = true
           scope.currentMonth = parseInt($routeParams.date) || datings.nowOrdinal()
+          scope.dateHref = if $routeParams.date then "?date=#{$routeParams.date}" else ""
           scope.months = datings.monthsAround(datings.nowOrdinal(), 1).map((m) => {month: m, title: datings.monthFormat(m)})
 
           TasksService.setBudget($routeParams.budget, scope.currentMonth).then ->
@@ -111,7 +112,7 @@ module.exports = (app) ->
       scope.resetEdit = ->
         scope.editedTask = null
       scope.isNewTaskForProject = (task, project) ->
-        task and task.objectId is undefined and task.projects.indexOf(project.name) != -1
+        task and task.objectId is undefined and task.projects.indexOf(project.name) != -1 and not task.saving
       scope.isEditedTask = (task) ->
         scope.editedTask and scope.editedTask.objectId == task.objectId
       scope.removeTask = (task) ->

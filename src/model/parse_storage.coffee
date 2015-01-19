@@ -42,7 +42,7 @@ module.exports = (app) ->
 
     loadUser: ->
       d = $q.defer()
-      Budget.query(where: {ownerid: userptr()}).then (budgets) ->
+      Budget.query(where: {ownerid: userptr()}, order: 'createdAt').then (budgets) ->
         d.resolve {username: Parse.auth.currentUser.username, budgets}
       d.promise
 
@@ -119,7 +119,23 @@ module.exports = (app) ->
       task.completed = false
       task.save()
 
+    _loadAllTasks: (month) ->
+      Task.query(where: {
+        $or: [
+          {
+            ownerid: userptr(),
+            completed: true,
+            completedAt: month
+          },
+          {
+            ownerid: userptr(),
+            completed: false
+          }
+        ]
+      }, order: 'createdAt')
+
     loadTasks: (budget, month) ->
+      return @_loadAllTasks(budget) if typeof budget == "number"
       Task.query(where: {
         $or: [
           {
@@ -134,10 +150,10 @@ module.exports = (app) ->
             completed: false
           }
         ]
-      })
+      }, order: 'createdAt')
 
     loadModifications: ->
-      Modification.query(where: {ownerid: userptr()})
+      Modification.query(where: {ownerid: userptr()}, order: 'createdAt')
 
     loadCompletedTasksBetween: (from, to) ->
       Task.query(where: {

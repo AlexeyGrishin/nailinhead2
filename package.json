@@ -1,6 +1,6 @@
 {
   "name": "nailinhead2",
-  "version": "0.9.7",
+  "version": "1.0",
   "author": "Alexey Grishin <alexey.grishin@gmail.com>",
   "dependencies": {
     "coffee-script": "^1.8.0",

@@ -8,7 +8,7 @@ class Set
   map: (a...)-> @array.map(a...)
   slice: -> @array.slice()
 
-removeById = (array, element, idAttr = 'id') ->
+removeById = (array, element, idAttr = 'objectId') ->
   elem = findById(array, element[idAttr], idAttr)
   if elem and array.indexOf(elem) != -1
     array.splice(array.indexOf(elem), 1)

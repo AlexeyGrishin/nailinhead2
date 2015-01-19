@@ -31,35 +31,39 @@ class TasksService
     @loadTasks(@getBudget(id), month)
 
   loadTasks: (budget, month) ->
+    sameMonth = @currentMonth == month
     @currentBudget = budget
     @currentMonth = month
     @projects = []
     @tasks = []
-    if cached = @_getcache @currentBudget, @currentMonth
-      @tasks = cached
+    if sameMonth and @allTasks
+      @tasks = (@allTasks[budget.objectId] ?= [])
       @_rearrangeByProjects()
       return @promise(@tasks)
-    @storage.loadTasks(@currentBudget, @currentMonth).then(
+    @storage.loadTasks(@currentMonth).then(
       (tasks) =>
-        @tasks = tasks
-        @_savecache @currentBudget, @currentMonth, tasks
-        @_rearrangeByProjects()
+        @_rearrangeByBudgets(tasks)
     )
 
-  _savecache: (budget, month, tasks) ->
-    @cachedTasks[budget.objectId] ?= {}
-    @cachedTasks[budget.objectId][month] = tasks
-    tasks
-  _getcache: (budget, month) ->
-    @cachedTasks[budget.objectId]?[month]
-  _clearcache: (budget) ->
-    delete @cachedTasks[budget.objectId]
+  _clearcache: ->
+    @allTasks = null
 
   prepareTaskIn: (project) ->
     @storage.prepareTaskIn(project, @currentBudget)
 
   canBuy: (task) ->
     @getTask(task.objectId).cost <= @currentBudget.remaining
+
+  _rearrangeByBudgets: (tasks = undefined) ->
+    if not tasks
+      tasks = []
+      for id, btasks of @allTasks
+        tasks = tasks.concat(btasks)
+    @allTasks = {}
+    for task in tasks
+      (@allTasks[task.budgetid.objectId] ?= []).push(task)
+    @tasks = (@allTasks[@currentBudget.objectId] ?= [])
+    @_rearrangeByProjects()
 
   _rearrangeByProjects: ->
     names = set()
@@ -108,6 +112,7 @@ class TasksService
     task = @_validateTask(task, task)
     @tasks.push(task)
     @_rearrangeByProjects()
+    task.saving = true
     @storage.addTask(@currentBudget.objectId, task)
 
   removeTask: (task) ->
@@ -148,20 +153,17 @@ class TasksService
     @storage.changeBudget budget, {projects: budget.projects}
 
   moveToBudget: (task, budgetId) ->
-    removeById(@tasks, task)
-    @_rearrangeByProjects()
     @_modifyBudgetRemaining(@currentBudget, +task.cost) if task.completed
     @storage.moveToBudget(task, budgetId)
     targetBudget = @getBudget(budgetId)
     @_modifyBudgetProjects targetBudget, task.projects[0]
     @_modifyBudgetRemaining(targetBudget, -task.cost) if task.completed
-    @_clearcache(targetBudget)
+    @_rearrangeByBudgets()
 
   moveToMonth: (task, month) ->
     removeById(@tasks, task)
     @_rearrangeByProjects()
     @storage.moveToMonth(task, month)
-    @_clearcache(@currentBudget)
 
   prepareModification: (data) ->
     @storage.prepareModification(data)
@@ -207,7 +209,7 @@ class TasksService
   tasks: []
   projects: []
   modifications: []
-  cachedTasks: {}
+  allTasks: {}
 
 
 module.exports = TasksService
