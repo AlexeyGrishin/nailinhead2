@@ -1,6 +1,3 @@
-require('./js/sortable')
-require('./js/ng-sortable')
-
 TasksService = require('./tasks/model')
 TasksStorage = require('./model/storage')
 ParseStorage = require('./model/parse_storage')
