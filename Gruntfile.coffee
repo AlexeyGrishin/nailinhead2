@@ -26,7 +26,7 @@ module.exports = (grunt)->
       images: fromPublicToRelease("img")
       lang: fromPublicToRelease("lang", "*.json")
     preprocess:
-      release: fromPublicToRelease('', '**/*.html', {version, production: true})
+      release: fromPublicToRelease('', '**/*.html', {version:version, production: true})
     watch:
       coffee: watchFor("src/**/*.coffee", "public/*.html", "public/partial/*.html").run("dev")
       styles: watchFor("src/less/**/*.less").run("less")
