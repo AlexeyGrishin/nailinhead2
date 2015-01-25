@@ -16,7 +16,7 @@
             <th>Прибавки</th>
             <td ng-repeat="mods in report.modifications">
                 <div class="report-task total mod" ng-if="mods.length > 1">
-                    <span nih-cost="pm.cost"></span>
+                    <span nih-cost="mods.cost"></span>
                     <span class="title">Всего</span>
                 </div>
                 <div class="report-task  mod" ng-repeat="task in mods" ng-class="{total: mods.length == 1}">
