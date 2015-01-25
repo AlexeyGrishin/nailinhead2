@@ -65,6 +65,7 @@ module.exports = (app) ->
     link: (scope, el, attrs) ->
       scope.$watch attrs.nihCost, (val) ->
         scope.high = Math.floor(val / 1000)
+        scope.high = "" if scope.high == 0
         scope.low = zeros(val % 1000, 3)
 
   app.directive 'nihBonds', ->
@@ -76,11 +77,8 @@ module.exports = (app) ->
       """
     link: (scope, el, attrs) ->
       scope.$watch attrs.nihBonds, (val) ->
-        scope.b50 = []
-        scope.b5 = []
-        scope.b1 = []
         el.empty()
-        for key, limit of {bond50: 50000, bond5: 5000, bond1: 1000}
+        for key, limit of {bond50: 50000, bond5: 5000, bond1: 1000, bond500: 500, bond100: 100}
           while val >= limit
             el.prepend("<span class='#{key}'></span>")
             val -= limit

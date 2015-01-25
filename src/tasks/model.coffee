@@ -198,7 +198,7 @@ class TasksService
           for project in report.projects
             project.permonth[i] = tasks.filter((t) => t.projects[0] == project.project and t.completedAt == month)
             project.permonth[i].cost = sum project.permonth[i], (it) -> it.cost
-        report.modifications.cost = sum report.modifications, (it) -> it.cost
+          report.modifications[i].cost = sum report.modifications[i], (it) -> it.cost
         reportDefer.resolve(report)
     )
     reportDefer.promise
