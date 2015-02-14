@@ -14,7 +14,7 @@ module.exports = (app) ->
     class Task extends Parse.Model
       @configure "Task", "title", "cost1", "cost", "amount", "ACL", "ownerid", "budgetid", "completed", "completedAt", "completedDate", "projects"
       day: ->
-        if @completed then new Date(@completedDate.iso).getDate() + 1 else ""
+        if @completed then new Date(@completedDate.iso).getDate() else ""
 
     class Modification extends Parse.Model
       @configure "Modification", "reason", "total", "budgets", "ACL", "ownerid", "date", "month"
