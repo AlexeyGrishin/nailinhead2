@@ -123,9 +123,8 @@ class TasksService
   completeTask: (task) ->
     task.completed = true
     #TODO: concurrent?
-    @storage.completeTask(task)
+    @storage.completeTask(task, @currentMonth)
     @_modifyBudgetRemaining(@currentBudget, -task.cost)
-    #todo: update budget after return
 
   _modifyBudgetRemaining: (budget, cost) ->
     budget.remaining += cost

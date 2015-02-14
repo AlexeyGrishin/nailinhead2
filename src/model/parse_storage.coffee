@@ -13,6 +13,8 @@ module.exports = (app) ->
 
     class Task extends Parse.Model
       @configure "Task", "title", "cost1", "cost", "amount", "ACL", "ownerid", "budgetid", "completed", "completedAt", "completedDate", "projects"
+      day: ->
+        if @completed then new Date(@completedDate.iso).getDate() + 1 else ""
 
     class Modification extends Parse.Model
       @configure "Modification", "reason", "total", "budgets", "ACL", "ownerid", "date", "month"
@@ -82,10 +84,9 @@ module.exports = (app) ->
     removeTask: (task) ->
       task.destroy()
 
-    completeTask: (task) ->
+    completeTask: (task, date = new Date()) ->
       task.completed = true
-      date = new Date()
-      task.completedDate = dateptr(date)
+      task.completedDate = dateptr(datings.fromOrdinal(date))
       task.completedAt = datings.toOrdinal(date)
       task.save()
 

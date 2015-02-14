@@ -80,14 +80,15 @@ main {
         margin-right: @taskPad;
 
         &.handler {
-          @handlerSize: 1.5em;
+          @handlerSize: 1.7em;
           width: @handlerSize;
           height: @handlerSize;
+          line-height: @handlerSize;
           top: (@taskHeight - @handlerSize) / 2;
           left: (@taskHandlerWidth - @handlerSize) / 2;
           background: #ebeb7a;
           .animated();
-          border-radius: 2em;
+          border-radius: 1em;
           &:hover {
             border-radius: 0;
             .rotation(45deg);
@@ -98,6 +99,14 @@ main {
           width: 100%;
           height: 100%;
         }
+      }
+
+      .completion-date {
+        text-align: center;
+        font-size: @fontSmall;
+        color: white;
+        font-weight: bold;
+        text-decoration: none !important;
       }
 
       h4 {
