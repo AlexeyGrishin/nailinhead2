@@ -42,7 +42,10 @@
         </em>
         <div ng-repeat="task in project.tasks" class="task-container" ng-class="{completed: task.completed}">
             <div class="task" ng-class="{completed: task.completed}">
-                <span class="icon-before-task handler" nih-drag-task="task" title="Перетащите в другой бюджет или проект"></span>
+                <span class="icon-before-task handler completion-date"
+                      nih-drag-task="task"
+                      title="Перетащите в другой бюджет или проект"
+                        >{{task.day()}}</span>
                 <h4 ng-click="editTask(task)" title="Нажмите чтобы отредактировать">{{task.title}}</h4>
                 <button ng-click="toggle(task)" ng-if="!task.completed && enoughToBuy(task)">Купить</button>
                 <button disabled ng-if="!task.completed && !enoughToBuy(task)">Нет денег</button>
