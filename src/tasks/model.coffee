@@ -69,6 +69,7 @@ class TasksService
     names = set()
     @tasks.forEach (t) ->
       t.projects.forEach (p) -> names.push(p)
+    names.sort()
     @currentBudget.projects.forEach (p) -> names.push(p)
     self = @
     newprs = (names.map (name) =>

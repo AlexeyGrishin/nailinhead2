@@ -6,6 +6,8 @@ class Set
     if @array.indexOf(item) == -1
       @array.push(item)
   map: (a...)-> @array.map(a...)
+  sort: ->
+    @array = @array.sort()
   slice: -> @array.slice()
 
 removeById = (array, element, idAttr = 'objectId') ->
