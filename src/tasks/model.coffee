@@ -123,7 +123,7 @@ class TasksService
   completeTask: (task) ->
     task.completed = true
     #TODO: concurrent?
-    @storage.completeTask(task, @currentMonth)
+    @storage.completeTask(task, if @currentMonth == datings.nowOrdinal() then new Date() else @currentMonth)
     @_modifyBudgetRemaining(@currentBudget, -task.cost)
 
   _modifyBudgetRemaining: (budget, cost) ->
