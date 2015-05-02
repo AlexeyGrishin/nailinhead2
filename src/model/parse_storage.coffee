@@ -161,7 +161,7 @@ module.exports = (app) ->
         ownerid: userptr(),
         completed: true,
         completedAt: {$gte: from, $lte: to}
-      })
+      }, limit: 1000)
 
     modifyBudgetRemaining: (budget, deltaRemaining) ->
       budget.save()
